@@ -5,8 +5,10 @@ import I18n from '../localization/I18n';
 
 const addPoster = async (deviceId, title, name, message, longitude, latitude) => {
     try {
-        const url = 'http://localhost:5100/poster/add'
-        const data = { DeviceId: deviceId, Title: title.typeTitle, Name: name.typeName, Message: message.typeMessage, Latitude: latitude, Longitude: longitude }
+        const locales = I18n.locale;
+        const locale = locales.substring(0,2);
+        const url = 'https://onlinedemonstrator.ru/poster/add'
+        const data = { DeviceId: deviceId, Title: title.typeTitle, Name: name.typeName, Message: message.typeMessage, Latitude: latitude, Longitude: longitude, locale: locale }
         const body = JSON.stringify(data)
         const response = await fetch(url, {
             method: 'POST',
