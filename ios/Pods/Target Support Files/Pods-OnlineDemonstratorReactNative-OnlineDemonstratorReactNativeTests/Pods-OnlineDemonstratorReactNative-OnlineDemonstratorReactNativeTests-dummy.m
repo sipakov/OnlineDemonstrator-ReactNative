@@ -1,0 +1,5 @@
+#import <Foundation/Foundation.h>
+@interface PodsDummy_Pods_OnlineDemonstratorReactNative_OnlineDemonstratorReactNativeTests : NSObject
+@end
+@implementation PodsDummy_Pods_OnlineDemonstratorReactNative_OnlineDemonstratorReactNativeTests
+@end

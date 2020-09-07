@@ -1,0 +1,6 @@
+module Pods_OnlineDemonstratorReactNative_OnlineDemonstratorReactNativeTests {
+  umbrella header "Pods-OnlineDemonstratorReactNative-OnlineDemonstratorReactNativeTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
