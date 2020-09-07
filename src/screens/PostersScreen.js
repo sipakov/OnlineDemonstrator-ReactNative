@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, SafeAreaView, Alert } from 'react-native';
+import { SafeAreaView, Alert } from 'react-native';
 import PosterList from '../components/PosterList'
-import { PinchGestureHandler } from 'react-native-gesture-handler';
 import I18n from '../localization/I18n';
-
-
 
 const getPosters = async (id) => {
     try {
@@ -12,7 +9,6 @@ const getPosters = async (id) => {
             `https://onlinedemonstrator.ru/poster/getPostersByDemonstrationId?demonstrationId=${id}`
         );
         let json = await response.json();
-        console.log('posters')
         if (response.status !== 200) {
             Alert.alert(
                 I18n.t('notification'),
@@ -32,14 +28,15 @@ const getPosters = async (id) => {
                 { text: I18n.t('OK') }
             ],
             { cancelable: false }
-        )    }
+        )
+    }
 }
 
 const PostersScreen = ({ route, navigation }) => {
     const [posters, setData] = useState([]);
 
-    const goToPoster = (deviceId, createdDate) =>
-        navigation.navigate('PosterScreen', { deviceId: deviceId, createdDate: createdDate})
+    const goToPoster = (deviceId, createdDate, demonstrationId) =>
+        navigation.navigate('PosterScreen', { deviceId: deviceId, createdDate: createdDate, demonstrationId: demonstrationId })
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
@@ -49,16 +46,16 @@ const PostersScreen = ({ route, navigation }) => {
     }, [navigation]);
 
     return (
-            <SafeAreaView>
+        <SafeAreaView>
             <PosterList
                 posters={posters}
                 goToPoster={goToPoster}
-                navigation ={navigation}
-                currentCulture = {route.params.currentCulture}
-                demonstrationId = {route.params.id}
-                isExpired = {route.params.isExpired}
+                navigation={navigation}
+                currentCulture={route.params.currentCulture}
+                demonstrationId={route.params.id}
+                isExpired={route.params.isExpired}
             />
-            </SafeAreaView>
+        </SafeAreaView>
     );
 }
 

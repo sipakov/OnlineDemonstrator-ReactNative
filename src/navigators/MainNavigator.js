@@ -9,7 +9,6 @@ import PostersScreen from '../screens/PostersScreen'
 import PosterScreen from '../screens/PosterScreen'
 import CreatePosterScreen from '../screens/CreatePosterScreen'
 
-
 import I18n from '../localization/I18n';
 
 const DemonstrationsStack = createStackNavigator();
@@ -25,7 +24,7 @@ export default function MainNavigator() {
                     headerTitle: I18n.t('mainScreen')
                 }}
             />
-             <DemonstrationsStack.Screen
+            <DemonstrationsStack.Screen
                 name='DemonstrationsScreen'
                 component={DemonstrationsScreen}
                 options={{
@@ -46,7 +45,7 @@ export default function MainNavigator() {
                     headerTitle: I18n.t('posterScreen')
                 }}
             />
-             <DemonstrationsStack.Screen
+            <DemonstrationsStack.Screen
                 name="CreatePosterScreen"
                 component={CreatePosterScreen}
                 options={{
@@ -60,14 +59,14 @@ export default function MainNavigator() {
                     headerTitle: I18n.t('mapScreen')
                 }}
             />
-             <DemonstrationsStack.Screen
+            <DemonstrationsStack.Screen
                 name="CreateDemonstrationScreen"
                 component={CreateDemonstrationScreen}
                 options={{
                     headerTitle: I18n.t('createDemonstrationScreen')
                 }}
             />
-           <DemonstrationsStack.Screen
+            <DemonstrationsStack.Screen
                 name="AboutScreen"
                 component={AboutScreen}
             />

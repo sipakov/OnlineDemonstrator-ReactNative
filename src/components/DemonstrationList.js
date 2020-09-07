@@ -1,11 +1,13 @@
-import * as React from 'react';
-import { View, Text, StyleSheet, StatusBar, FlatList } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, FlatList, Dimensions } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import I18n from '../localization/I18n';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as RNLocalize from "react-native-localize";
 import { format } from 'date-fns'
-import { en, ru} from 'date-fns/locale'
+import { en, ru } from 'date-fns/locale'
+
+const window = Dimensions.get("window");
 
 const Item = ({ item, goToDemo, currentCulture }) => {
   const dateToString = format(new Date(item.demonstrationDate), 'PP', { locale: currentCulture === 'ru' ? ru : en });
@@ -42,20 +44,20 @@ const getHeader = () => {
 };
 
 const DemonstrationList = ({ demos, goToDemo }) => {
+
   const currentCulture = RNLocalize.getLocales()[0].languageCode;
   const renderItem = ({ item }) => (
     <Item item={item} goToDemo={goToDemo} currentCulture={currentCulture} />
   );
-  if(demos === 'undefined') 
-  {
-   return (Alert.alert(
+  if (demos === 'undefined') {
+    return (Alert.alert(
       I18n.t('notification'),
       I18n.t('commonErrorMessage'),
       [
-          { text: I18n.t('OK') }
+        { text: I18n.t('OK') }
       ],
       { cancelable: false }
-  ))
+    ))
   }
 
   return (
@@ -73,40 +75,32 @@ const DemonstrationList = ({ demos, goToDemo }) => {
 export default DemonstrationList
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
-  },
   item: {
     padding: 10,
     marginVertical: 4,
     marginHorizontal: 1,
-    width: 400,
-    //borderBottomWidth: 1,
-    //borderColor: '#8a9094',
-    borderLeftWidth:10,
-    borderLeftColor:'#222f64',
-    paddingBottom:10
+    borderLeftWidth: 10,
+    borderLeftColor: '#222f64',
+    paddingBottom: 10,
+    width: window.width-20
   },
-  itemExpired:{
+  itemExpired: {
     padding: 10,
     marginVertical: 4,
     marginHorizontal: 1,
-    width: 400,
-    //borderBottomWidth: 1,
-    //borderColor: '#8a9094',
-    borderLeftWidth:10,
-    borderLeftColor:'#8a9094' 
+    borderLeftWidth: 10,
+    borderLeftColor: '#8a9094',
+    width: window.width-20
   },
   title: {
     fontSize: 16,
     color: '#272c30',
-    fontWeight:'500'
+    fontWeight: '500'
   },
   expiredDemoTitle: {
     fontSize: 16,
     color: '#8a9094',
-    fontWeight:'500'
+    fontWeight: '500'
   },
   goToPosters: {
     fontSize: 12,
@@ -138,14 +132,14 @@ const styles = StyleSheet.create({
   },
   expiredItemElement: {
     color: '#8a9094',
-    fontWeight:'300'
+    fontWeight: '300'
   },
   itemElement: {
-    fontWeight:'300'
+    fontWeight: '300'
   },
   listHeader: {
     backgroundColor: '#f2f2f2',
-    width: 400
+    width: window.width-20
   },
   titleList: {
     color: '#656565',

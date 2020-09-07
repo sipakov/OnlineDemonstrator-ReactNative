@@ -55,7 +55,6 @@ const CreatePosterScreen = ({ route, navigation }) => {
                     isExpired={route.params.isExpired}
                     navigation={navigation}
                 >
-
                 </CreatePoster>
             </ScrollView>
         </SafeAreaView>

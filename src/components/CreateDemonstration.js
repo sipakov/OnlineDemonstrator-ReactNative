@@ -1,5 +1,5 @@
-import React, { useEffect, useState, setState } from 'react';
-import { Button, View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import React from 'react';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import I18n from '../localization/I18n';
 import DeviceInfo from 'react-native-device-info';
 
@@ -38,10 +38,8 @@ const CreateDemonstration = ({ addPoster, latitude, longitude, navigation }) => 
                 onChangeText={(text => { setStateMessage(() => { return { typeMessage: text } }) })}
                 placeholder={I18n.t('message')}
             />
-            <TouchableOpacity onPress={() =>
-                {
-                 if(typeTitle.length < 1 || typeMessage.length < 1) 
-                 {
+            <TouchableOpacity onPress={() => {
+                if (typeTitle.length < 1 || typeMessage.length < 1) {
                     Alert.alert(
                         I18n.t('notification'),
                         I18n.t('requiredFieldTitleAndMessage'),
@@ -50,12 +48,11 @@ const CreateDemonstration = ({ addPoster, latitude, longitude, navigation }) => 
                         ],
                         { cancelable: false }
                     )
-                 } 
-                else
-                {
+                }
+                else {
                     addPoster(uniqueDeviceId, typeTitle, typeName, typeMessage, longitude, latitude).then(() => navigation.goBack())
                 }
-                }}>
+            }}>
                 <View style={styles.itemAdd}>
                     <Text style={styles.text}>{I18n.t('createPoster')}</Text>
                 </View>
@@ -66,7 +63,7 @@ const CreateDemonstration = ({ addPoster, latitude, longitude, navigation }) => 
 export default CreateDemonstration
 
 const styles = StyleSheet.create({
-     title: {
+    title: {
         fontSize: 18,
         padding: 20
     },

@@ -19,7 +19,7 @@ export default function AboutNavigator() {
                     headerTitle: I18n.t('aboutScreen')
                 }}
             />
-             <AboutStack.Screen
+            <AboutStack.Screen
                 name='ContactsScreen'
                 component={ContactsScreen}
                 options={{
@@ -33,14 +33,13 @@ export default function AboutNavigator() {
                     headerTitle: I18n.t('licenseScreen')
                 }}
             />
-             <AboutStack.Screen
+            <AboutStack.Screen
                 name="PrivacyPolicyScreen"
                 component={PrivacyPolicyScreen}
                 options={{
                     headerTitle: I18n.t('privacyPolicyScreen')
                 }}
             />
-            
         </AboutStack.Navigator>
     );
 }

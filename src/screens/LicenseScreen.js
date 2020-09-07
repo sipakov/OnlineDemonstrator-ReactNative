@@ -1,13 +1,49 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, Alert, Text } from 'react-native';
+import { SafeAreaView, Alert, Text, ScrollView } from 'react-native';
 import I18n from '../localization/I18n';
-import { TextInput } from 'react-native-gesture-handler';
 
-const LicenseScreen = ({ navigation }) => {
+const getLicense = async () => {
+    try {
+        let response = await fetch(
+            'https://onlinedemonstrator.ru/metadata/getLicense'
+        );
+        let json = await response.json();
+        if (response.status !== 200) {
+            Alert.alert(
+                I18n.t('notification'),
+                json.message,
+                [
+                    { text: I18n.t('OK') }
+                ],
+                { cancelable: false }
+            )
+        }
+        return json;
+    } catch (error) {
+        Alert.alert(
+            I18n.t('notification'),
+            I18n.t('commonErrorMessage'),
+            [
+                { text: I18n.t('OK') }
+            ],
+            { cancelable: false }
+        )
+    }
+}
 
+const LicenseScreen = _ => {
+
+    const [license, setData] = useState([]);
+
+    useEffect(() => {
+        getLicense().then(res => setData(res));
+    }, []);
+    console.log(license)
     return (
-        <SafeAreaView>
-<TextInput multiline={true} numberOfLines={30}>{I18n.t('license')}</TextInput>
+        <SafeAreaView >
+            <ScrollView>
+                <Text >{license.value}</Text>
+            </ScrollView>
         </SafeAreaView>
     );
 }

@@ -23,7 +23,5 @@
     "OK": "OK",
     "notification": "Notification",
     "commonErrorMessage": "Oops. Something went wrong. Check your internet connection",
-    "requiredFieldTitleAndMessage": "Title and message field are required",
-    "license": "OnlineDemonstrator Copyright (c) 2020"
-            
+    "requiredFieldTitleAndMessage": "Title and message field are required"            
 }

@@ -1,5 +1,5 @@
-import React, { useEffect, useState, setState } from 'react';
-import { Button, View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState, } from 'react';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import I18n from '../localization/I18n';
 import DeviceInfo from 'react-native-device-info';
 
@@ -12,8 +12,9 @@ const CreatePoster = ({ addPoster, demonstrationId, isExpired, navigation }) => 
     const [uniqueDeviceId, setUniqueDeviceId] = React.useState('');
 
     useEffect(() => {
-        setUniqueDeviceId(()=> DeviceInfo.getUniqueId());
-        DeviceInfo.getBaseOs().then(res=> setBaseOs(res));}, []);
+        setUniqueDeviceId(() => DeviceInfo.getUniqueId());
+        DeviceInfo.getBaseOs().then(res => setBaseOs(res));
+    }, []);
 
     return (
         <View>
@@ -53,7 +54,7 @@ const CreatePoster = ({ addPoster, demonstrationId, isExpired, navigation }) => 
 export default CreatePoster
 
 const styles = StyleSheet.create({
-     title: {
+    title: {
         fontSize: 18,
         padding: 20
     },

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, Alert } from 'react-native';
+import { SafeAreaView, Alert} from 'react-native';
 import DemonstrationList from '../components/DemonstrationList';
 import I18n from '../localization/I18n';
 
@@ -9,7 +9,7 @@ const getDemos = async () => {
             'https://onlinedemonstrator.ru/demonstration/getActualDemonstrations'
         );
         let json = await response.json();
-        console.log('demonstrations')
+        console.log(1)
         if (response.status !== 200) {
             Alert.alert(
                 I18n.t('notification'),
@@ -29,18 +29,17 @@ const getDemos = async () => {
                 { text: I18n.t('OK') }
             ],
             { cancelable: false }
-        )    }
+        )
+    }
 }
-
 
 const DemonstrationsScreen = ({ navigation }) => {
     const [demos, setData] = useState([]);
 
     const goToDemo = (id, currentCulture, isExpired) =>
-        navigation.navigate('PostersScreen', { id: id, currentCulture: currentCulture, isExpired: isExpired})
-
+        navigation.navigate('PostersScreen', { id: id, currentCulture: currentCulture, isExpired: isExpired })
+      
     useEffect(() => {
-        console.log('demonstrations2')
         const unsubscribe = navigation.addListener('focus', () => {
             getDemos().then(res => setData(res));
         });
@@ -48,7 +47,7 @@ const DemonstrationsScreen = ({ navigation }) => {
     }, [navigation]);
 
     return (
-        <SafeAreaView>
+        <SafeAreaView >
             <DemonstrationList
                 demos={demos}
                 goToDemo={goToDemo}
@@ -58,3 +57,4 @@ const DemonstrationsScreen = ({ navigation }) => {
 }
 
 export default DemonstrationsScreen
+

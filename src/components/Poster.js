@@ -1,29 +1,31 @@
 import * as React from 'react';
-import { StyleSheet, View, Text, ScrollView } from 'react-native'
+import { StyleSheet, View, Text, ScrollView, Dimensions } from 'react-native'
+
+const window = Dimensions.get("window");
 
 const Poster = ({ poster, navigation }) => {
 
-    console.log(poster)
-    return (  
-            <View style={styles.container}>
-                <ScrollView>
+    return (
+        <View style={styles.container}>
+            <ScrollView>
                 <Text style={styles.title}>{poster?.title}</Text>
                 <Text style={styles.message}>{poster?.message}</Text>
                 <Text style={styles.name}>{poster?.name}</Text>
-                </ScrollView>
-            </View>
+            </ScrollView>
+        </View>
     );
 }
 export default Poster
 
 const styles = StyleSheet.create({
     container: {
-        width: 380,
-        height: 600,
+        padding:10,
+        height: 520,
         backgroundColor: 'white',
         margin: 10,
         borderWidth: 1,
-        borderColor: '#ed413d'
+        borderColor: '#ed413d',
+        width: window.width -20
     },
     title: {
         color: '#ed413d',
