@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react';
 import MapView, { Marker } from 'react-native-maps';
 import { Alert, StyleSheet, SafeAreaView } from "react-native";
 import I18n from '../localization/I18n';
+import * as RNLocalize from "react-native-localize";
+
+const currentCulture = RNLocalize.getLocales()[0].languageCode;
+
 
 const getPostersForMarkers = async (posterCountPerDemo) => {
   try {
@@ -62,13 +66,12 @@ const MapScreen = ({ navigation }) => {
         showsUserLocation={true}
         onPress={(e) => {
           if (e.nativeEvent.action !== 'marker-press') {
-            console.log(e.nativeEvent.coordinate.longitude)
             navigation.navigate('CreateDemonstrationScreen', { longitude: e.nativeEvent.coordinate.longitude, latitude: e.nativeEvent.coordinate.latitude })
           }
         }}
       >
         {
-          postersForMarkers?.map((poster) => <Marker
+          postersForMarkers?.map((poster) => <Marker onCalloutPress={()=>{navigation.navigate('PostersScreen', {id: poster.demonstrationId, currentCulture: currentCulture, isExpired: poster.isExpired})}}
             pinColor={poster.isExpired ? '#8a9094' : 'red'}
             key={poster.deviceId.toString() + poster.createdDate.toString() + poster.demonstrationId.toString()}
             coordinate={{ latitude: poster.latitude, longitude: poster.longitude }}

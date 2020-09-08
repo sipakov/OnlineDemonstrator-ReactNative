@@ -8,7 +8,6 @@ import CreateDemonstrationScreen from '../screens/CreateDemonstrationScreen'
 import PostersScreen from '../screens/PostersScreen'
 import PosterScreen from '../screens/PosterScreen'
 import CreatePosterScreen from '../screens/CreatePosterScreen'
-
 import I18n from '../localization/I18n';
 
 const DemonstrationsStack = createStackNavigator();
@@ -73,3 +72,4 @@ export default function MainNavigator() {
         </DemonstrationsStack.Navigator>
     );
 }
+

@@ -3,7 +3,6 @@ import { Button, View, StyleSheet } from 'react-native';
 import I18n from '../localization/I18n';
 
 export default function AboutScreen({ navigation }) {
-  console.log('about')
   return (
     <View style={styles.container} >
       <Button style={styles.button} title={I18n.t('contactsScreen')} onPress={() => navigation.navigate('ContactsScreen')}></Button>

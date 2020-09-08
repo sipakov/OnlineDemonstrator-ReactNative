@@ -19,7 +19,7 @@
     "message": "Message",
     "name": "Name",
     "createPoster": "Create",
-    "mapAlertMessage": "To create a new demonstration (or join an existing one), select a place and tap on the map",
+    "mapAlertMessage": "To create a new demonstration (or join an existing one), select a place (street, square) and tap on the map",
     "OK": "OK",
     "notification": "Notification",
     "commonErrorMessage": "Oops. Something went wrong. Check your internet connection",
