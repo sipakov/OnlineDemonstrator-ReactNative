@@ -11,14 +11,18 @@ const window = Dimensions.get("window");
 
 const Item = ({ item, goToDemo, currentCulture }) => {
   const dateToString = format(new Date(item.demonstrationDate), 'PP', { locale: currentCulture === 'ru' ? ru : en });
-
+//item.demonstrationTitle ='За свободные выборы и справедливые цены на бензин'
   return (
     <TouchableOpacity onPress={() => goToDemo(item.id, currentCulture, item.isExpired)}>
       <View style={item.isExpired ? styles.itemExpired : styles.item}>
+      <View style={styles.horizontal}>
+          <Text style={item.isExpired ? styles.expiredDemoTitle : styles.demoTitle}>{item.demonstrationTitle !== null ? item.demonstrationTitle?.substring(0, 35) + (item.demonstrationTitle?.length > 35 ? '...' : '') : ''}</Text>
+        </View>
         <View style={styles.horizontal}>
           <Text style={item.isExpired ? styles.expiredDemoTitle : styles.title}>{item.detailName}</Text>
           <Icon name={item.isExpired ? "repeat-outline" : "paper-plane-outline"} size={20} cache='force-cache' style={item.isExpired ? styles.expiredItemElement : styles.itemElement} color={item.isExpired ? "#8a9094" : null}></Icon>
         </View>
+        
         <View style={styles.horizontal}>
           <View style={styles.horizontalStart}>
             <Text style={item.isExpired ? styles.expiredItemElement : styles.itemElement}>{dateToString}</Text>
@@ -94,10 +98,22 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    color: '#272c30',
+    color: '#222f64',
+    fontWeight: '400'
+  },
+  expiredTitle: {
+    fontSize: 16,
+    color: '#8a9094',
+    fontWeight: '400'
+  },
+  demoTitle: {
+    marginBottom:10,
+    fontSize: 16,
+    color: '#ed413d',
     fontWeight: '500'
   },
   expiredDemoTitle: {
+    marginBottom:10,
     fontSize: 16,
     color: '#8a9094',
     fontWeight: '500'
@@ -135,7 +151,8 @@ const styles = StyleSheet.create({
     fontWeight: '300'
   },
   itemElement: {
-    fontWeight: '300'
+    fontWeight: '300',
+    color:'#222f64'
   },
   listHeader: {
     backgroundColor: '#f2f2f2',

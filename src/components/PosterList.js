@@ -9,7 +9,7 @@ import { en, ru } from 'date-fns/locale'
 const window = Dimensions.get("window");
 
 const Item = ({ item, goToPoster, currentCulture }) => {
-  const dateToString = format(new Date(item.createdDate), 'PP', { locale: currentCulture === 'ru' ? ru : en });
+  const dateToString = format(new Date(item.createdDateTime), 'PP', { locale: currentCulture === 'ru' ? ru : en });
   return (
     <TouchableOpacity onPress={() => goToPoster(item.deviceId, item.createdDate, item.demonstrationId)}>
       <View style={styles.item}>
