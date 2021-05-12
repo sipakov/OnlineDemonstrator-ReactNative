@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, StatusBar, FlatList, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Share, FlatList, Dimensions } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import I18n from '../localization/I18n';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -23,7 +23,19 @@ const Item = ({ item, goToPoster, currentCulture }) => {
   )
 };
 
-const PosterList = ({ posters, goToPoster, currentCulture, demonstrationId, isExpired, navigation }) => {
+const onShare = (demonstrationTitle) => {
+  try {
+    const result = Share.share({
+      message:
+      demonstrationTitle,
+      url: 'https://apps.apple.com/ru/app/online-demonstrator/id1511424258'
+    });
+  } catch (error) {
+    alert(error.message);
+  }
+};
+
+const PosterList = ({ posters, goToPoster, currentCulture, demonstrationId, isExpired, demonstrationTitle, navigation }) => {
   const renderItem = ({ item }) => (
     <Item item={item} goToPoster={goToPoster} currentCulture={currentCulture} />
   );
@@ -31,6 +43,12 @@ const PosterList = ({ posters, goToPoster, currentCulture, demonstrationId, isEx
   const getHeader = () => {
     return (
       <View style={styles.listHeader}>
+         <TouchableOpacity onPress={() => {onShare(demonstrationTitle)}}>
+          <View style={styles.shareButton}>
+            <Text style={styles.titleList}>{I18n.t('shareDemonstration') + ' '}</Text>
+            <Icon name="share-social-outline" cache='force-cache' style={styles.titleList}></Icon>         
+          </View>
+        </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('CreatePosterScreen', { demonstrationId, isExpired })}>
           <View style={styles.addButton}>
             <Text style={styles.titleList}>{I18n.t('addPoster') + '  '}</Text>
@@ -84,12 +102,25 @@ const styles = StyleSheet.create({
   listHeader: {
     backgroundColor: '#f2f2f2',
     width: window.width-20,
-    padding: 20,
+    marginLeft: 20,
+    marginBottom:20,
+    marginTop:20,
+    //padding: 20,
+    flexDirection: 'row', 
+    justifyContent: 'space-between',
   },
   titleList: {
     color: '#007AFF',
     fontSize: 18
   },
   addButton:
-    { flexDirection: 'row', justifyContent: "flex-end" }
+  { 
+    flexDirection: 'row', 
+    justifyContent: "flex-end" 
+  },
+  shareButton:
+  { 
+    flexDirection: 'row', 
+    justifyContent: "flex-start" 
+  }
 });

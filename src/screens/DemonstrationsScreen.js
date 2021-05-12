@@ -36,8 +36,11 @@ const getDemos = async () => {
 const DemonstrationsScreen = ({ navigation }) => {
     const [demos, setData] = useState([]);
 
-    const goToDemo = (id, currentCulture, isExpired) =>
-        navigation.navigate('PostersScreen', { id: id, currentCulture: currentCulture, isExpired: isExpired })
+    const goToDemo = (id, currentCulture, isExpired, demonstrationTitle) =>
+        navigation.navigate('PostersScreen', { id: id, currentCulture: currentCulture, isExpired: isExpired, demonstrationTitle: demonstrationTitle})
+
+    const goToMap = () =>
+        navigation.navigate('MapScreen')
       
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
@@ -51,6 +54,7 @@ const DemonstrationsScreen = ({ navigation }) => {
             <DemonstrationList
                 demos={demos}
                 goToDemo={goToDemo}
+                goToMap = {goToMap}
             />
         </SafeAreaView>
     );

@@ -13,7 +13,7 @@ const Item = ({ item, goToDemo, currentCulture }) => {
   const dateToString = format(new Date(item.demonstrationDate), 'PP', { locale: currentCulture === 'ru' ? ru : en });
 //item.demonstrationTitle ='За свободные выборы и справедливые цены на бензин'
   return (
-    <TouchableOpacity onPress={() => goToDemo(item.id, currentCulture, item.isExpired)}>
+    <TouchableOpacity onPress={() => goToDemo(item.id, currentCulture, item.isExpired, item.demonstrationTitle)}>
       <View style={item.isExpired ? styles.itemExpired : styles.item}>
       <View style={styles.horizontal}>
           <Text style={item.isExpired ? styles.expiredDemoTitle : styles.demoTitle}>{item.demonstrationTitle !== null ? item.demonstrationTitle?.substring(0, 35) + (item.demonstrationTitle?.length > 35 ? '...' : '') : ''}</Text>
@@ -39,16 +39,22 @@ const Item = ({ item, goToDemo, currentCulture }) => {
   )
 };
 
-const getHeader = () => {
-  return (
-    <View style={styles.listHeader}>
-      <Text style={styles.titleList}>{I18n.t('titleList')}</Text>
-    </View>
-  )
-};
 
-const DemonstrationList = ({ demos, goToDemo }) => {
 
+const DemonstrationList = ({ demos, goToDemo, goToMap}) => {
+  const getHeader = () => {
+    return (
+      <View style={styles.listHeader}>
+        <Text style={styles.titleList}>{I18n.t('titleList')}</Text>
+        <TouchableOpacity onPress={() => goToMap()}>
+          <View style={styles.demonstrationsOnButton}>
+            <Text style={styles.buttonInHeader}>{I18n.t('demonstrationsOnMap') + ' '}</Text>
+            <Icon name="map-outline" cache='force-cache' style={styles.buttonInHeader}></Icon>
+          </View>
+        </TouchableOpacity>
+      </View>
+    )
+  };
   const currentCulture = RNLocalize.getLocales()[0].languageCode;
   const renderItem = ({ item }) => (
     <Item item={item} goToDemo={goToDemo} currentCulture={currentCulture} />
@@ -162,5 +168,15 @@ const styles = StyleSheet.create({
     color: '#656565',
     padding: 20,
     fontSize: 15
-  }
+  },
+  demonstrationsOnButton:
+  { 
+    flexDirection: 'row', 
+    justifyContent: "flex-start",
+    padding: 20 
+  },
+  buttonInHeader: {
+    color: '#007AFF',
+    fontSize: 18
+  },
 });

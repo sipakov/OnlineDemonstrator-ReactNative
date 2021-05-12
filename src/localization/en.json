@@ -15,13 +15,16 @@
     "titleList": "Join an existing or revive one of the previously completed rallies",
     "expiredDemonstration": "expired",
     "addPoster": "Add poster",
-    "title": "Title",
-    "message": "Message",
-    "name": "Name",
+    "title": "Title*",
+    "message": "Message*",
+    "name": "Name*",
     "createPoster": "Create",
-    "mapAlertMessage": "To create a new demonstration (or join an existing one), select a place (street, square) and tap on the map",
+    "mapAlertMessage": "To create a new demonstration (or join an existing one), select a place (street, square) and tap on the map. Marked on the map: red - active, gray - inactive",
     "OK": "OK",
     "notification": "Notification",
-    "commonErrorMessage": "Oops. Something went wrong. Check your internet connection",
-    "requiredFieldTitleAndMessage": "Title and message field are required"            
+    "commonErrorMessage": "Oops. Something went wrong in app. Check your internet connection",
+    "requiredFieldTitleAndMessage": "Title and message field are required",
+    "shareDemonstration": "Share",
+    "demonstrationsOnMap": "On map"
+            
 }

@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ImageBackground, Alert, SafeAreaView } from 'react-native';
+import React, { useEffect, useState, useContext } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, ImageBackground, Alert, SafeAreaView, ActivityIndicator } from 'react-native';
 import I18n from '../localization/I18n';
 import Icon from 'react-native-vector-icons/Ionicons';
+import DeviceInfo from 'react-native-device-info';
+import AppContext from '../../AppContext';
 
 const getCount = async () => {
   try {
@@ -32,29 +34,73 @@ const getCount = async () => {
   }
 }
 
-const MainScreen = ({ navigation }) => {
-  const [demonstrationCount, setData] = useState([]);
+const addDevice = async (uniqueDeviceId, baseOs, fcmToken) => {
+  try {
+      const url = 'https://onlinedemonstrator.ru/device/add';
+      
+      console.log(uniqueDeviceId)
+      console.log(baseOs)
+      console.log(fcmToken)
+      const data = { DeviceId: uniqueDeviceId, BaseOs: baseOs, FcmToken: fcmToken}
+      const body = JSON.stringify(data)
+      const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: body
+      })
+      const result = await response.json();
+      if (response.status !== 200) {
+          Alert.alert(
+              I18n.t('notification'),
+              result.message,
+              [
+                  { text: I18n.t('OK') }
+              ],
+              { cancelable: false }
+          )
+      }
+      return result;
+  } catch (error) {
+    console.log(error)
+  }
+}
 
+
+const MainScreen = ({ navigation }) => {
+
+  const uniqueDeviceId = DeviceInfo.getUniqueId();
+  const [baseOs, setBaseOs] = React.useState('');
+  const { fcmToken, setFcmToken } = useContext(AppContext);
+
+  //useEffect(() => {    
+    DeviceInfo.getBaseOs().then(res => setBaseOs(res));
+    addDevice(uniqueDeviceId, baseOs, fcmToken).then(res => console.log(res));
+//}, []);
+
+const initialState = -1;
+  const [demonstrationCount, setData] = useState({actualCount: initialState, expiredCount: initialState});
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       getCount().then(res => setData(res));
     });
     return unsubscribe;
   }, [navigation]);
+
   return (
     <SafeAreaView >
       <ImageBackground source={require('../asserts/images/mainScreen.png')} style={{ width: '100%', height: '100%' }} imageStyle={{ opacity: 0.7 }}>
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end', marginBottom: 70 }}>
           <TouchableOpacity onPress={() => navigation.navigate('DemonstrationsScreen')}>
             <View style={styles.itemLook}>
-              <Text style={styles.text}>{I18n.t('lookForDemonstrations')}</Text>
-              <View style={styles.itemLookCountContainer}>
-                <Text style={styles.itemLookCountText}>{demonstrationCount?.actualCount + ' '}</Text>
-                <Icon name="paper-plane-outline" size={18} cache='force-cache' color={'gray'}></Icon>
-                <Text style={styles.itemLookCountText}>{'     ' + demonstrationCount?.expiredCount + ' '}</Text>
-                <Icon name="repeat-outline" size={18} cache='force-cache' color={'gray'}></Icon>
-
-              </View>
+              <Text style={styles.text}>{I18n.t('lookForDemonstrations')}</Text>              
+                  <View style={styles.itemLookCountContainer}>
+                    <Text style={styles.itemLookCountText}>{demonstrationCount.actualCount === initialState ? <ActivityIndicator /> : demonstrationCount?.actualCount + ' '}</Text>
+                    <Icon name="paper-plane-outline" size={18} cache='force-cache' color={'gray'}></Icon>
+                    <Text style={styles.itemLookCountText}>{demonstrationCount.expiredCount === initialState ? <ActivityIndicator /> : '     ' + demonstrationCount?.expiredCount + ' '}</Text>
+                    <Icon name="repeat-outline" size={18} cache='force-cache' color={'gray'}></Icon>
+                  </View>            
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('MapScreen')}>

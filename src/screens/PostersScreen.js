@@ -54,6 +54,7 @@ const PostersScreen = ({ route, navigation }) => {
                 currentCulture={route.params.currentCulture}
                 demonstrationId={route.params.id}
                 isExpired={route.params.isExpired}
+                demonstrationTitle={route.params.demonstrationTitle}
             />
         </SafeAreaView>
     );
