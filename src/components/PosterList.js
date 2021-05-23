@@ -23,13 +23,22 @@ const Item = ({ item, goToPoster, currentCulture }) => {
   )
 };
 
-const onShare = (demonstrationTitle) => {
+const onShare = async (demonstrationTitle) => {
   try {
-    const result = Share.share({
+    const result = await Share.share({
       message:
       demonstrationTitle,
       url: 'https://apps.apple.com/ru/app/online-demonstrator/id1511424258'
     });
+    if (result.action === Share.sharedAction) {
+      if (result.activityType) {
+console.log(11);
+      } else {
+        console.log(22);
+      }
+    } else if (result.action === Share.dismissedAction) {
+      console.log(33);
+    }
   } catch (error) {
     alert(error.message);
   }

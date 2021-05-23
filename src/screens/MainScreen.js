@@ -36,12 +36,10 @@ const getCount = async () => {
 
 const addDevice = async (uniqueDeviceId, baseOs, fcmToken) => {
   try {
-      const url = 'https://onlinedemonstrator.ru/device/add';
-      
-      console.log(uniqueDeviceId)
-      console.log(baseOs)
-      console.log(fcmToken)
-      const data = { DeviceId: uniqueDeviceId, BaseOs: baseOs, FcmToken: fcmToken}
+      const url = 'http://localhost:5100/device/add';
+      const locales = I18n.locale;
+      const locale = locales.substring(0,2);
+      const data = { DeviceId: uniqueDeviceId, BaseOs: baseOs, FcmToken: fcmToken, locale: locale}
       const body = JSON.stringify(data)
       const response = await fetch(url, {
           method: 'POST',
