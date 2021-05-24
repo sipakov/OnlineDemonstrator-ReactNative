@@ -7,6 +7,7 @@ import { format } from 'date-fns'
 import { en, ru } from 'date-fns/locale'
 
 const window = Dimensions.get("window");
+const uniqueDeviceId = DeviceInfo.getUniqueId();
 
 const Item = ({ item, goToPoster, currentCulture }) => {
   const dateToString = format(new Date(item.createdDateTime), 'PP', { locale: currentCulture === 'ru' ? ru : en });
@@ -32,6 +33,7 @@ const onShare = async (demonstrationTitle) => {
     });
     if (result.action === Share.sharedAction) {
       if (result.activityType) {
+		  const shareResult = await share();
 console.log(11);
       } else {
         console.log(22);
@@ -43,6 +45,35 @@ console.log(11);
     alert(error.message);
   }
 };
+
+const share = async (uniqueDeviceId) => {
+    try {
+        let response = await fetch(
+            'https://onlinedemonstrator.ru/device/share?deviceIn=uniqueDeviceId'
+        );
+        let json = await response.json();
+        if (response.status !== 200) {
+            Alert.alert(
+                I18n.t('notification'),
+                json.message,
+                [
+                    { text: I18n.t('OK') }
+                ],
+                { cancelable: false }
+            )
+        }
+        return json;
+    } catch (error) {
+        Alert.alert(
+            I18n.t('notification'),
+            I18n.t('commonErrorMessage'),
+            [
+                { text: I18n.t('OK') }
+            ],
+            { cancelable: false }
+        )
+    }
+}
 
 const PosterList = ({ posters, goToPoster, currentCulture, demonstrationId, isExpired, demonstrationTitle, navigation }) => {
   const renderItem = ({ item }) => (
