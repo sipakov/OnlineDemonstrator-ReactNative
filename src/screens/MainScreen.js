@@ -36,7 +36,7 @@ const getCount = async () => {
 
 const addDevice = async (uniqueDeviceId, baseOs, fcmToken) => {
   try {
-      const url = 'http://localhost:5100/device/add';
+      const url = 'https://onlinedemonstrator.ru/device/add';
       const locales = I18n.locale;
       const locale = locales.substring(0,2);
       const data = { DeviceId: uniqueDeviceId, BaseOs: baseOs, FcmToken: fcmToken, locale: locale}

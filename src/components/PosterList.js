@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Share, FlatList, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Share, FlatList, Dimensions, Alert } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import I18n from '../localization/I18n';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { format } from 'date-fns'
 import { en, ru } from 'date-fns/locale'
+import DeviceInfo from 'react-native-device-info';
 
 const window = Dimensions.get("window");
 const uniqueDeviceId = DeviceInfo.getUniqueId();
@@ -26,20 +27,20 @@ const Item = ({ item, goToPoster, currentCulture }) => {
 
 const onShare = async (demonstrationTitle) => {
   try {
+    const metaDataApp = await getMetaDataApp();
+    console.log(metaDataApp.linkToAppStore);
     const result = await Share.share({
       message:
       demonstrationTitle,
-      url: 'https://apps.apple.com/ru/app/online-demonstrator/id1511424258'
+      url: metaDataApp.linkToAppStore
     });
     if (result.action === Share.sharedAction) {
       if (result.activityType) {
-		  const shareResult = await share();
-console.log(11);
+		  const shareResult = await share(uniqueDeviceId);
+      console.log(shareResult);
       } else {
-        console.log(22);
       }
     } else if (result.action === Share.dismissedAction) {
-      console.log(33);
     }
   } catch (error) {
     alert(error.message);
@@ -49,7 +50,7 @@ console.log(11);
 const share = async (uniqueDeviceId) => {
     try {
         let response = await fetch(
-            'https://onlinedemonstrator.ru/device/share?deviceIn=uniqueDeviceId'
+            'https://onlinedemonstrator.ru/device/share?deviceIn='+uniqueDeviceId
         );
         let json = await response.json();
         if (response.status !== 200) {
@@ -73,6 +74,36 @@ const share = async (uniqueDeviceId) => {
             { cancelable: false }
         )
     }
+}
+
+const getMetaDataApp = async () => {
+  try {
+      let response = await fetch(
+          'https://onlinedemonstrator.ru/device/getMetaDataApp'
+      );
+      let json = await response.json();
+      console.log(JSON.stringify(json));
+      if (response.status !== 200) {
+          Alert.alert(
+              I18n.t('notification'),
+              json.message,
+              [
+                  { text: I18n.t('OK') }
+              ],
+              { cancelable: false }
+          )
+      }
+      return json;
+  } catch (error) {
+      Alert.alert(
+          I18n.t('notification'),
+          I18n.t('commonErrorMessage'),
+          [
+              { text: I18n.t('OK') }
+          ],
+          { cancelable: false }
+      )
+  }
 }
 
 const PosterList = ({ posters, goToPoster, currentCulture, demonstrationId, isExpired, demonstrationTitle, navigation }) => {
